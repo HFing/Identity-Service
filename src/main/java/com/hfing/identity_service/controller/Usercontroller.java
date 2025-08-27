@@ -7,11 +7,14 @@ import com.hfing.identity_service.dto.response.UserResponse;
 import com.hfing.identity_service.entity.User;
 import com.hfing.identity_service.service.UserService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/users")
 public class Usercontroller {
@@ -19,14 +22,20 @@ public class Usercontroller {
     private UserService userService;
 
     @PostMapping
-    ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest user) {
-        ApiResponse<User> response = new ApiResponse<>();
-        response.setResult(userService.createUser(user));
-        return response;
+    ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest user) {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.createUser(user))
+                .build();
     }
 
     @GetMapping
     ApiResponse<List<UserResponse>> getUsers(){
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        log.info("Username: {}",authentication.getName());
+        log.info("Username: {}",authentication.getPrincipal());
+        log.info("Authorities: {}",authentication.getAuthorities());
+
         return ApiResponse.<List<UserResponse>>builder()
                 .result(userService.getUsers())
                 .build();
@@ -53,6 +62,13 @@ public class Usercontroller {
         userService.deleteUser(userId);
         return ApiResponse.<String>builder()
                 .result("User has been deleted")
+                .build();
+    }
+
+    @GetMapping("/myinfo")
+    ApiResponse<UserResponse> getMyInfo() {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.getMyInfo())
                 .build();
     }
 
