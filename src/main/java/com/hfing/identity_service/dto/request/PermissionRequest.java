@@ -1,28 +1,20 @@
 package com.hfing.identity_service.dto.request;
 
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
-import java.util.List;
-
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class UserUpdateRequest {
-     String password ;
-     String firstName ;
-     String lastName ;
-     LocalDate dob ;
-     List<String> roles ;
-
-
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class PermissionRequest {
+     String name;
+     String description ;
 
 }
