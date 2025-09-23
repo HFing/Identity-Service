@@ -1,5 +1,6 @@
 package com.hfing.identity_service.dto.request;
 
+import com.hfing.identity_service.validator.DobContraints;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,8 @@ public class UserCreationRequest {
      String password ;
      String firstName ;
      String lastName ;
+
+     @DobContraints(min = 18, message = "INVALID_DOB")
      LocalDate dob ;
 
 
