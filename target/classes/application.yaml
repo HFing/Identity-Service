@@ -15,3 +15,5 @@ spring:
 
 jwt:
   signingKey: "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJkZXZ0ZXJpYS5jb20iLCJzdWIiOiJob2FuZzMiLCJleHAiOjE3NTYxNDY3MTIsImlhdCI6MTc1NjE0MzExMiwidXNlcklkIjoiQ3VzdG9tIn0.Z9ZrIH8d7geIoatb2-6R8Ag2P92uraa32gloha3eLnWcenl5sN3JppBM-199Mi6G5v81AbtLtUmPwWG3I2to-w"
+  valid-duration: 15 # in seconds
+  refresh-duration: 120 # in seconds
