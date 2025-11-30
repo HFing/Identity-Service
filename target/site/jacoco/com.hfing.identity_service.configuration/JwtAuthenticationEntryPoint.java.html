@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JwtAuthenticationEntryPoint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">identity-service</a> &gt; <a href="index.source.html" class="el_package">com.hfing.identity_service.configuration</a> &gt; <span class="el_source">JwtAuthenticationEntryPoint.java</span></div><h1>JwtAuthenticationEntryPoint.java</h1><pre class="source lang-java linenums">package com.hfing.identity_service.configuration;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hfing.identity_service.dto.request.ApiResponse;
+import com.hfing.identity_service.exception.ErrorCode;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.web.ErrorResponse;
+
+import java.io.IOException;
+
+<span class="fc" id="L16">public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {</span>
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+<span class="nc" id="L19">        ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;</span>
+<span class="nc" id="L20">        response.setStatus(errorCode.getStatusCode().value());</span>
+<span class="nc" id="L21">        response.setContentType(MediaType.APPLICATION_JSON_VALUE);</span>
+<span class="nc" id="L22">        ApiResponse&lt;?&gt; apiResponse = ApiResponse.builder()</span>
+<span class="nc" id="L23">                .code(errorCode.getCode())</span>
+<span class="nc" id="L24">                .message(errorCode.getMessage())</span>
+<span class="nc" id="L25">                .build();</span>
+
+<span class="nc" id="L27">        ObjectMapper mapper = new ObjectMapper();</span>
+
+<span class="nc" id="L29">        response.getWriter().write(mapper.writeValueAsString(apiResponse));</span>
+
+<span class="nc" id="L31">        response.flushBuffer();</span>
+<span class="nc" id="L32">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
